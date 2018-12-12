@@ -1,6 +1,6 @@
 #include "../includes/ft_ssl.h"
 
-void	make_hash(t_global *global)
+void	call_main_controller(t_global *global)
 {
 	parse_input(global);
 }

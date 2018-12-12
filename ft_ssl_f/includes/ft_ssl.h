@@ -25,4 +25,10 @@ int main(int argc, char **argv);
 t_global *init_global(int argc, char **argv);
 
 
+/*
+**main_controller.c
+*/
+void	call_main_controller(t_global *global);
+
+
 #endif
