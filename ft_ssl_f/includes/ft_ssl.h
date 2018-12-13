@@ -10,25 +10,61 @@
 
 typedef struct			s_global
 {
-	int					argc;
-	char				**argv;
+	int					ac;
+	char				**av;
+	char				r;
+	char				q;
+	int					av_i;
+	char				reach_files;
+	char				input_was;
+	char				*mock;
 }						t_global;
 
 /*
 **main.c
 */
-int main(int argc, char **argv);
+int			main(int argc, char **argv);
 
 /*
 **global.c
 */
-t_global *init_global(int argc, char **argv);
+t_global	*init_global(int argc, char **argv);
 
 
 /*
 **main_controller.c
 */
-void	call_main_controller(t_global *global);
+void		call_main_controller(t_global *global);
+void		process_av(t_global *g, char *av);
+void		add_flag(t_global *g, char *flag);
 
+/*
+**print.c
+*/
+void		print_erorr_s();
+void		print_erorr_command(char *command);
+void		print_usage_md5();
+void		print_usage_ssl();
+
+/*
+**check.c
+*/
+void		check_command();
+
+
+/*
+**stdin.c
+*/
+void		process_stdin(t_global *g);
+
+/*
+**string.c
+*/
+void		process_string(t_global *g);
+
+/*
+**file.c
+*/
+void		process_file(t_global *g, char *file);
 
 #endif

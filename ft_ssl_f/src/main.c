@@ -1,10 +1,10 @@
 #include "../includes/ft_ssl.h"
 
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	t_global *global;
+	t_global *g;
 
-	global = init_global(argc, argv);
-	call_main_controller(global);
+	g = init_global(ac, av);
+	call_main_controller(g);
 	return(0);
 }

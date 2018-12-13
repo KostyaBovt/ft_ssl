@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 void print_bits(unsigned int x)
 {
@@ -55,13 +56,11 @@ void print_memory(void *ptr, int length)
 
 int main(void)
 {
-	unsigned int x;
-	// char *str = "string"; 
+	char **commands;
 
-	x = 0X01234567;
-	print_memory(&x, 4);
-
-	// print_bits(255);
-
+	commands[0] = "md5";
+	commands[1] = "sha256";
+	commands[2] = NULL;
+	write(1, commands[0], 4);
 	return 0;
 }
