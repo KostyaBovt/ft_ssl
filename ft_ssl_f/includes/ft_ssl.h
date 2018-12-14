@@ -20,6 +20,27 @@ typedef struct			s_global
 	char				*mock;
 }						t_global;
 
+
+typedef struct			s_str_iterator
+{
+	char				*str;
+	int					str_i;
+	int					str_len;
+	int					str_i;
+	void				*(*next_block_str)(void *self);
+}						t_str_iterator;
+
+
+typedef struct			s_ctx
+{
+	uint32_t			a;
+	uint32_t			b;
+	uint32_t			c;
+	uint32_t			d;
+}						t_ctx;
+
+
+
 /*
 **main.c
 */

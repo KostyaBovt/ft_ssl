@@ -1,7 +1,9 @@
 #include "../includes/ft_ssl.h"
 
-void	process_string(t_global *g)
+void			process_string(t_global *g)
 {
+	char *hash;
+
 	g->input_was = 1;
 	if (g->ac - 1 == g->av_i) // if this is last av
 	{
@@ -12,17 +14,67 @@ void	process_string(t_global *g)
 	else
 		(g->av_i)++;
 		ft_printf("we in process_string %s %s\n", g->av[g->av_i], g->mock);
-		make_hash_string(g->av[g->av_i]);
+		hash = make_hash_string(g->av[g->av_i]);
+		print_hash(hash, g);
 }
 
-void	make_hash_string(char *str)
+void			make_hash_string(char *str)
 {
 	t_ctx	*ctx;
+	void	*block;
 
-	ctx = init_ctx();
 	//create context
+	ctx = init_ctx();
+	
 	//iterate string over blocks of 512 bits (64 bytes)
-	//pass block and context in loop to hashing function
-	// print context as result hash
+	str_iterator = init_str_iterator(str);
+	while ((block = str_iterator->next_block_str((void*)str_iterator)))
+		//pass block and context in loop to hashing function
+		calculate_block_hash(ctx, block);
 
+	// return result hash
+	return compile_hash(ctx);
+}
+
+t_str_iterator	*init_str_iterator(char *str)
+{
+	t_str_iterator	*new;
+
+	new = (t_str_itertor*)malloc(sizeof(t_str_iterator));
+	new->str = str;
+	new->str_len = ft_strlen(str);
+	new->str_i = 0;
+	new->full_blocks_n = new->str_len / 64;
+	new->full_blocks_returned = 0;
+	new->last_block_len = new->str_len % 64;
+	new->last_blocks_n = new->last_block_len < 56 ? 1 : 2;
+	new->last_blocks_returned = 0;
+	new->next = &next_block_str;
+
+	return new;
+}
+
+void			*next_block_str(t_str_iterator *self)
+{
+	void *final_block;
+
+	if (self->full_blocks_returned < self->full_blocks_n)
+	{
+		final_block = (void*)self->str[self->str_i];
+		(self->full_blocks_returned)++;
+		self->str_i += 64;
+		return final_block;
+	}
+	else if (self->last_blocks_returned < self->last_blocks_n)
+	{
+		if (self->last_blocks_returned == 1)
+			final_block = make_last_padded_block(self->str_len);
+		else
+			final_block = make_padded_block((void*)self->str[self->str_i], self->last_block_len, self->str_len);
+		
+		(self->last_blocks_returned)++;
+		return final_block;
+	}
+	else
+		return NULL;
 }
