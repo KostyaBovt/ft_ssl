@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <string.h>
+# include <unistd.h>
 
 char			*ft_strcpy(char *dst, const char *src);
 void			*ft_memset(void *b, int c, size_t len);
@@ -68,6 +69,8 @@ void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char const *s, int fd);
 void			ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
+void			ft_print_byte(unsigned char c);
+void			ft_print_memory(void *ptr, int length, char verbose);
 
 typedef struct	s_list
 {

@@ -5,7 +5,7 @@ LIB_PATH = ./libft
 PRINTF = printf.a
 PRINTF_PATH = ./printf
 SRC = main.c global.c main_controller.c print.c check.c file.c stdin.c \
-string.c context.c
+av_string.c context.c hash.c padding.c fghi.c
 OBJ = $(subst .c,.o,$(SRC))
 
 .PHONY: all clean fclean re cleano

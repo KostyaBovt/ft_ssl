@@ -22,7 +22,7 @@ ft_putnbr_fd.c ft_strdel.c ft_strmap.c ft_strrchr.c ft_isdigit.c ft_lstnew.c \
 ft_memmove.c ft_putstr.c ft_strdup.c ft_strmapi.c ft_strsplit.c ft_isprint.c \
 ft_memalloc.c ft_memset.c ft_putstr_fd.c ft_strequ.c ft_strncat.c \
 ft_strstr.c ft_memccpy.c ft_putchar.c ft_strcat.c ft_striter.c ft_strncmp.c \
-ft_strsub.c get_next_line.c get_next_line2.c
+ft_strsub.c get_next_line.c get_next_line2.c ft_print_byte.c ft_print_memory.c
 OBJECTS = $(subst .c,.o,$(SOURCES))
 
 all: $(NAME)

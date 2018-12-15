@@ -135,13 +135,18 @@ int main(void)
 	void_v = (void*)malloc(64);
 	ft_bzero(void_v, 64);
 
-	unsigned long long int n;
-	n = 255;
+	uint64_t n;
+	n = 4294967295;
 
 	ft_memcpy(&void_v[56], &n, sizeof(n));
 
 	print_memory(void_v, 64);
 	write(1, "\n\n", 2);
 	print_memory(&n, sizeof(n));
+
+
+
+	ft_putnbr(sizeof(n));
 	return 0;
 }
+
