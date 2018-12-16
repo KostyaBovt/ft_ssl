@@ -16,7 +16,7 @@ void			process_string(t_global *g)
 		(g->av_i)++;
 		ft_printf("we in process_string %s %s\n", g->av[g->av_i], g->mock);
 		hash = make_hash_string(g->av[g->av_i]);
-		ft_printf("\nFINAL HASH: %s\n", hash);
+		ft_printf("\nFINAL HASH: %16.16m STOP\n", (void*)hash);
 		// print_hash(hash, g);
 	}
 }

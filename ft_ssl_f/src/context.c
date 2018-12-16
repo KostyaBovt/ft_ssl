@@ -27,15 +27,28 @@ t_ctx *copy_ctx(t_ctx *ctx)
 void print_ctx(t_ctx *ctx)
 {
 	write(1, "A: ", 3);
-	ft_print_memory(&(ctx->a), sizeof(uint32_t), 0);
+	// ft_print_memory(&(ctx->a), sizeof(uint32_t), 0);
+	ft_printf("%zu", ctx->a);
 	write(1, "\n", 1);
 	write(1, "B: ", 3);
-	ft_print_memory(&(ctx->b), sizeof(uint32_t), 0);
+	ft_printf("%zu", ctx->b);
+	// ft_print_memory(&(ctx->b), sizeof(uint32_t), 0);
 	write(1, "\n", 1);
 	write(1, "C: ", 3);
-	ft_print_memory(&(ctx->c), sizeof(uint32_t), 0);
+	// ft_putnbr(ctx->c);
+	ft_printf("%zu", ctx->c);
+	// ft_print_memory(&(ctx->c), sizeof(uint32_t), 0);
 	write(1, "\n", 1);
 	write(1, "D: ", 3);
-	ft_print_memory(&(ctx->d), sizeof(uint32_t), 0);
+	ft_printf("%zu", ctx->d);
+	// ft_print_memory(&(ctx->d), sizeof(uint32_t), 0);
 	write(1, "\n", 1);
+}
+
+void merge_ctx(t_ctx *ctx, t_ctx *temp_ctx)
+{
+	ctx->a += temp_ctx->a;
+	ctx->b += temp_ctx->b;
+	ctx->c += temp_ctx->c;
+	ctx->d += temp_ctx->d;
 }

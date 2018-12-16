@@ -60,6 +60,7 @@ void			calculate_block_hash(t_ctx *ctx, void *block);
 char			*compile_hash(t_ctx *ctx);
 uint32_t		*devide_block(void *block);
 int				get_word_i(int i);
+void			print_block(uint32_t *block);
 
 /*
 **main_controller.c
@@ -79,6 +80,7 @@ void			*make_padded_block(void *block_start, int last_block_len, int msg_len);
 **print.c
 */
 void			print_erorr_s();
+void			print_erorr_file(char *file);
 void			print_erorr_command(char *command);
 void			print_usage_md5();
 void			print_usage_ssl();
@@ -94,6 +96,7 @@ void			check_command();
 t_ctx			*init_ctx();
 t_ctx			*copy_ctx(t_ctx *ctx);
 void			print_ctx(t_ctx *ctx);
+void			merge_ctx(t_ctx *ctx, t_ctx *temp_ctx);
 
 /*
 **stdin.c

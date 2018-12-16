@@ -70,7 +70,7 @@ void			ft_putstr_fd(char const *s, int fd);
 void			ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_print_byte(unsigned char c);
-void			ft_print_memory(void *ptr, int length, char verbose);
+void			ft_print_memory(void *ptr, int length, char *flags);
 
 typedef struct	s_list
 {

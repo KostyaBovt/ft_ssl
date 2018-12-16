@@ -5,6 +5,12 @@ void	print_erorr_s()
 	ft_printf("md5: option requires an argument -- s\n");
 }
 
+void	print_erorr_file(char *file)
+{
+	ft_printf("md5: %s: No such file or directory\n", file);
+}
+
+
 void	print_erorr_command(char *command)
 {
 	ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n", command);

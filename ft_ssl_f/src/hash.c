@@ -1,4 +1,5 @@
 #include "../includes/ft_ssl.h"
+#include <inttypes.h>
 
 const uint32_t	S[] = {
 	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
@@ -34,7 +35,8 @@ void			calculate_block_hash(t_ctx *ctx, void *block)
 	ft_printf("CTX BEFORE:\n");
 	print_ctx(ctx);
 	ft_printf("\nBLOCK 512\n");
-	ft_print_memory(block, 64, 1);
+	ft_print_memory(block, 64, "dc");
+	print_block((uint32_t*)block);
 	ft_printf("\n");
 
 	uint32_t *M;
@@ -42,6 +44,7 @@ void			calculate_block_hash(t_ctx *ctx, void *block)
 	int i;
 	int g;
 	uint32_t F;
+	// uint64_t F_temp;
 
 	M = devide_block(block);
 	temp_ctx = copy_ctx(ctx);
@@ -58,20 +61,31 @@ void			calculate_block_hash(t_ctx *ctx, void *block)
 		else
 			F = md5_I(temp_ctx);
 		g = get_word_i(i);
-		F = F + K[i] + M[g];
+		ft_printf("F = a + F(b,c,d) + X[k] + T[i] = %zu + %zu + %zu + %zu = %" PRId64 "\n", temp_ctx->a, F, K[i], M[g], temp_ctx->a + F + K[i] + M[g]);
+		F = temp_ctx->a + F + K[i] + M[g];
 		temp_ctx->a = temp_ctx->d;
 		temp_ctx->d = temp_ctx->c;
 		temp_ctx->c = temp_ctx->b;
-		temp_ctx->b = temp_ctx->b + (F << S[i]);
+		ft_printf("b + (F << S[i]) = b + (%zu << %zu)= %zu + %zu = %zu\n", F, S[i], temp_ctx->b, (F << S[i]), temp_ctx->b + (F << S[i]));
+		temp_ctx->b = temp_ctx->b + ((F << S[i]) | (F >> (32 - S[i])));
+		ft_printf("TEMP_CTX AFTER [%d]/[63] cycle:\n", i);
+		print_ctx(temp_ctx);
 	}
-	// merge_ctx(ctx, temp_ctx);
+	merge_ctx(ctx, temp_ctx);
+	ft_printf("CTX AFTER:\n");
+	print_ctx(ctx);
 }
 
 char *compile_hash(t_ctx *ctx)
 {
-	if (ctx->a)
-		return "some_mock_value_of_hash";
-	return "some_mock_value_of_hash2";
+	void *temp;
+
+	temp = (void*)malloc(16);
+	ft_memcpy(temp, &(ctx->a), 4);
+	ft_memcpy(&temp[4], &(ctx->b), 4);
+	ft_memcpy(&temp[8], &(ctx->c), 4);
+	ft_memcpy(&temp[12], &(ctx->d), 4);
+	return (char*)temp;
 }
 
 uint32_t *devide_block(void *block)
@@ -89,4 +103,16 @@ int get_word_i(int i)
 		return (3 * i + 5) % 16;
 	else
 		return (7 * i) % 16;
+}
+
+void print_block(uint32_t *block)
+{
+	int i;
+
+	i = 0;
+	while (i < 16)
+	{
+		ft_printf("word [%d]: %zu\n", i, block[i]);
+		i++;
+	}
 }

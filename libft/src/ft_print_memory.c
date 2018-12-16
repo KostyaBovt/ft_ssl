@@ -12,7 +12,7 @@
 
 #include "../includes/libft.h"
 
-void	ft_print_memory(void *ptr, int length, char verbose)
+void	ft_print_memory(void *ptr, int length, char *flags)
 {
 	int				i;
 	unsigned char	c;
@@ -25,7 +25,12 @@ void	ft_print_memory(void *ptr, int length, char verbose)
 		c = p[i];
 		ft_print_byte(c);
 		write(1, " | ", 3);
-		if (verbose)
+		if (ft_strchr(flags, (int)'d'))
+		{
+			ft_putnbr((int)c);
+			write(1, " | ", 3);
+		}
+		if (ft_strchr(flags, (int)'c'))
 		{
 			ft_putnbr(i);
 			write(1, "\n", 1);
