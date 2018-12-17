@@ -1,6 +1,6 @@
 #include "../includes/ft_ssl.h"
 
-void	*make_last_padded_block(int msg_len)
+void	*make_last_padded_block(unsigned long long int msg_len)
 {
 	void *new_block;
 	uint64_t n;
@@ -12,7 +12,7 @@ void	*make_last_padded_block(int msg_len)
 	return new_block;
 }
 
-void	*make_padded_block(void *block_start, int last_block_len, int msg_len)
+void	*make_padded_block(void *block_start, int last_block_len, unsigned long long int msg_len)
 {
 	unsigned char determinator;
 	void *new_block;

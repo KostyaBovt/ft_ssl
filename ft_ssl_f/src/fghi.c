@@ -5,7 +5,7 @@ uint32_t md5_F(t_ctx *ctx)
 	uint32_t ret;
 	ret = ((ctx->b & ctx->c) | (~(ctx->b) & ctx->d));
 
-	ft_printf("md5_F(B,C,D) = B and C or not(B) and D = %zu and %zu or not(%zu) and %zu = %zu\n", ctx->b, ctx->c, ctx->b, ctx->d, ret);
+	// ft_printf("md5_F(B,C,D) = B and C or not(B) and D = %zu and %zu or not(%zu) and %zu = %zu\n", ctx->b, ctx->c, ctx->b, ctx->d, ret);
 	return ret;
 }
 

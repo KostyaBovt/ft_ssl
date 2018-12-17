@@ -35,6 +35,20 @@ typedef struct			s_str_iterator
 }						t_str_iterator;
 
 
+typedef struct			s_fd_iterator
+{
+	char				*file;
+	int					fd;
+	unsigned long long int	total_len;
+	int					full_blocks_n;
+	int					full_blocks_returned;
+	int					last_block_len;
+	int					last_blocks_n;
+	int					last_blocks_returned;
+	void				*(*next)(void *self);
+}						t_fd_iterator;
+
+
 typedef struct			s_ctx
 {
 	uint32_t			a;
@@ -73,8 +87,8 @@ void			add_flag(t_global *g, char *flag);
 /*
 **padding.c
 */
-void			*make_last_padded_block(int msg_len);
-void			*make_padded_block(void *block_start, int last_block_len, int msg_len);
+void			*make_last_padded_block(unsigned long long int msg_len);
+void			*make_padded_block(void *block_start, int last_block_len, unsigned long long int msg_len);
 
 /*
 **print.c
@@ -124,5 +138,7 @@ uint32_t		md5_I(t_ctx *ctx);
 **file.c
 */
 void			process_file(t_global *g, char *file);
+t_fd_iterator	*init_fd_iterator(int fd);
+void			*next_block_fd(void *self_void);
 
 #endif
