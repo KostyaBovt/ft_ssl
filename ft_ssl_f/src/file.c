@@ -21,18 +21,18 @@ void	process_file(t_global *g, char *file)
 	ctx = init_ctx();
 	
 	//read file by blocks of 512 bits (64 bytes)
-	if (!(fd_iterator = init_fd_iterator(fd)))
+	if (!(fd_iterator = init_fd_iterator(g, fd)))
 		return;
 	while ((block = fd_iterator->next((void*)fd_iterator)))
 		//pass block and context in loop to hashing function
-		calculate_block_hash(ctx, block);
+		calculate_block_hash(g, ctx, block);
 
 	// return result hash
-	ft_printf("\nFINAL HASH: %16m STOP\n", (void*)compile_hash(ctx));
+	ft_printf("\nFINAL HASH: %16m STOP\n", (void*)compile_hash(g, ctx));
 	// return compile_hash(ctx);
 }
 
-t_fd_iterator	*init_fd_iterator(int fd)
+t_fd_iterator	*init_fd_iterator(t_global *g, int fd)
 {
 	t_fd_iterator	*new;
 
@@ -45,6 +45,7 @@ t_fd_iterator	*init_fd_iterator(int fd)
 	new->last_blocks_n = 0;
 	new->last_blocks_returned = 0;
 	new->next = &next_block_fd;
+	new->g = g;
 	return new;
 }
 
@@ -61,7 +62,7 @@ void			*next_block_fd(void *self_void)
 		return NULL;
 	if (self->last_blocks_returned == 1) {
 		self->last_blocks_returned = 2;
-		return make_last_padded_block(self->total_len);
+		return make_last_padded_block(self->g, self->total_len);
 	}
 	rd = read(self->fd, buf, 64);
 	if (rd == 64)
@@ -75,7 +76,7 @@ void			*next_block_fd(void *self_void)
 		self->total_len += rd;
 		self->last_blocks_n = self->last_block_len < 56 ? 1 : 2;
 		self->last_blocks_returned = 1;
-		return make_padded_block((void*)(buf), self->last_block_len, self->total_len);
+		return make_padded_block(self->g, (void*)(buf), self->last_block_len, self->total_len);
 	}
 	return NULL;
 }

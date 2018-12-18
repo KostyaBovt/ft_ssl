@@ -13,14 +13,14 @@ void	process_stdin(t_global *g)
 	ctx = init_ctx();
 	
 	//read file by blocks of 512 bits (64 bytes)
-	if (!(fd_iterator = init_fd_iterator(0)))
+	if (!(fd_iterator = init_fd_iterator(g, 0)))
 		return;
 	while ((block = fd_iterator->next((void*)fd_iterator)))
 		//pass block and context in loop to hashing function
-		calculate_block_hash(ctx, block);
+		calculate_block_hash(g, ctx, block);
 
 	// return result hash
-	ft_printf("\nFINAL HASH: %16m STOP\n", (void*)compile_hash(ctx));
+	ft_printf("\nFINAL HASH: %16m STOP\n", (void*)compile_hash(g, ctx));
 	// return compile_hash(ctx);
 
 }

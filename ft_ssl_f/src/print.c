@@ -17,9 +17,9 @@ void	print_erorr_command(char *command)
 	ft_printf("Standard commands:\n\nMessage Digest commands:\nmd5\nsha256\n\nCipher commands:\n");
 }
 
-void	print_usage_md5()
+void	print_usage_command(char *command)
 {
-	ft_printf("usage: md5 [-pqrtx] [-s string] [files ...]\n");
+	ft_printf("usage: %s [-pqrtx] [-s string] [files ...]\n", command);
 }
 
 void	print_usage_ssl()

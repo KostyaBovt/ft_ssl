@@ -10,6 +10,7 @@
 
 typedef struct			s_global
 {
+	char				*alg;
 	int					ac;
 	char				**av;
 	char				r;
@@ -32,6 +33,7 @@ typedef struct			s_str_iterator
 	int					last_blocks_n;
 	int					last_blocks_returned;
 	void				*(*next)(void *self);
+	t_global 			*g;
 }						t_str_iterator;
 
 
@@ -46,6 +48,7 @@ typedef struct			s_fd_iterator
 	int					last_blocks_n;
 	int					last_blocks_returned;
 	void				*(*next)(void *self);
+	t_global 			*g;
 }						t_fd_iterator;
 
 
@@ -55,6 +58,14 @@ typedef struct			s_ctx
 	uint32_t			b;
 	uint32_t			c;
 	uint32_t			d;
+	uint32_t			h0;
+	uint32_t			h1;
+	uint32_t			h2;
+	uint32_t			h3;
+	uint32_t			h4;
+	uint32_t			h5;
+	uint32_t			h6;
+	uint32_t			h7;
 }						t_ctx;
 
 /*
@@ -70,8 +81,8 @@ t_global		*init_global(int argc, char **argv);
 /*
 **hash.c
 */
-void			calculate_block_hash(t_ctx *ctx, void *block);
-char			*compile_hash(t_ctx *ctx);
+void			calculate_block_hash(t_global *g, t_ctx *ctx, void *block);
+char			*compile_hash(t_global *g, t_ctx *ctx);
 uint32_t		*devide_block(void *block);
 int				get_word_i(int i);
 void			print_block(uint32_t *block);
@@ -87,8 +98,8 @@ void			add_flag(t_global *g, char *flag);
 /*
 **padding.c
 */
-void			*make_last_padded_block(unsigned long long int msg_len);
-void			*make_padded_block(void *block_start, int last_block_len, unsigned long long int msg_len);
+void			*make_last_padded_block(t_global *g, unsigned long long int msg_len);
+void			*make_padded_block(t_global *g, void *block_start, int last_block_len, unsigned long long int msg_len);
 
 /*
 **print.c
@@ -96,13 +107,13 @@ void			*make_padded_block(void *block_start, int last_block_len, unsigned long l
 void			print_erorr_s();
 void			print_erorr_file(char *file);
 void			print_erorr_command(char *command);
-void			print_usage_md5();
+void			print_usage_command(char *command);
 void			print_usage_ssl();
 
 /*
 **check.c
 */
-void			check_command();
+void			check_command(t_global *g);
 
 /*
 **context.c
@@ -121,8 +132,8 @@ void			process_stdin(t_global *g);
 **string.c
 */
 void			process_string(t_global *g);
-char			*make_hash_string(char *str);
-t_str_iterator	*init_str_iterator(char *str);
+char			*make_hash_string(t_global *g, char *str);
+t_str_iterator	*init_str_iterator(t_global *g, char *str);
 void			*next_block_str(void *self);
 
 /*
@@ -138,7 +149,7 @@ uint32_t		md5_I(t_ctx *ctx);
 **file.c
 */
 void			process_file(t_global *g, char *file);
-t_fd_iterator	*init_fd_iterator(int fd);
+t_fd_iterator	*init_fd_iterator(t_global *g, int fd);
 void			*next_block_fd(void *self_void);
 
 #endif

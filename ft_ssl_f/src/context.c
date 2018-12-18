@@ -9,6 +9,14 @@ t_ctx *init_ctx()
 	new->b = 0xefcdab89;
 	new->c = 0x98badcfe;
 	new->d = 0x10325476;
+	new->h0 = 0x6A09E667;
+	new->h1 = 0xBB67AE85;
+	new->h2 = 0x3C6EF372;
+	new->h3 = 0xA54FF53A;
+	new->h4 = 0x510E527F;
+	new->h5 = 0x9B05688C;
+	new->h6 = 0x1F83D9AB;
+	new->h7 = 0x5BE0CD19;
 	return new;
 }
 
@@ -21,6 +29,14 @@ t_ctx *copy_ctx(t_ctx *ctx)
 	new->b = ctx->b;
 	new->c = ctx->c;
 	new->d = ctx->d;
+	new->h0 = ctx->h0;
+	new->h1 = ctx->h1;
+	new->h2 = ctx->h2;
+	new->h3 = ctx->h3;
+	new->h4 = ctx->h4;
+	new->h5 = ctx->h5;
+	new->h6 = ctx->h6;
+	new->h7 = ctx->h7;
 	return new;
 }
 

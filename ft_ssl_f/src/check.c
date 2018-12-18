@@ -18,7 +18,10 @@ void	check_command(t_global *g)
 	i = -1;
 	while (commands[++i])
 		if (!ft_strcmp(commands[i], g->av[1]))
-				return;
+		{
+			g->alg = commands[i];
+			return;
+		}
 	
 	print_erorr_command(g->av[1]);
 	exit(EXIT_FAILURE);

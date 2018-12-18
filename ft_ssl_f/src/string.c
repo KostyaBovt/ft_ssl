@@ -8,20 +8,20 @@ void			process_string(t_global *g)
 	if (g->ac - 1 == g->av_i) // if this is last av
 	{
 		print_erorr_s();
-		print_usage_md5();
+		print_usage_command(g->alg);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		(g->av_i)++;
 		ft_printf("we in process_string %s %s\n", g->av[g->av_i], g->mock);
-		hash = make_hash_string(g->av[g->av_i]);
+		hash = make_hash_string(g, g->av[g->av_i]);
 		ft_printf("\nFINAL HASH: %16.16m STOP\n", (void*)hash);
 		// print_hash(hash, g);
 	}
 }
 
-char			*make_hash_string(char *str)
+char			*make_hash_string(t_global *g, char *str)
 {
 	t_ctx	*ctx;
 	void	*block;
@@ -31,16 +31,16 @@ char			*make_hash_string(char *str)
 	ctx = init_ctx();
 	
 	//iterate string over blocks of 512 bits (64 bytes)
-	str_iterator = init_str_iterator(str);
+	str_iterator = init_str_iterator(g, str);
 	while ((block = str_iterator->next((void*)str_iterator)))
 		//pass block and context in loop to hashing function
-		calculate_block_hash(ctx, block);
+		calculate_block_hash(g, ctx, block);
 
 	// return result hash
-	return compile_hash(ctx);
+	return compile_hash(g, ctx);
 }
 
-t_str_iterator	*init_str_iterator(char *str)
+t_str_iterator	*init_str_iterator(t_global *g, char *str)
 {
 	t_str_iterator	*new;
 
@@ -54,6 +54,7 @@ t_str_iterator	*init_str_iterator(char *str)
 	new->last_blocks_n = new->last_block_len < 56 ? 1 : 2;
 	new->last_blocks_returned = 0;
 	new->next = &next_block_str;
+	new->g = g;
 
 	return new;
 }
@@ -75,9 +76,9 @@ void			*next_block_str(void *self_void)
 	else if (self->last_blocks_returned < self->last_blocks_n)
 	{
 		if (self->last_blocks_returned == 1)
-			final_block = make_last_padded_block(self->str_len);
+			final_block = make_last_padded_block(self->g, self->str_len);
 		else
-			final_block = make_padded_block((void*)(&(self->str[self->str_i])), self->last_block_len, self->str_len);
+			final_block = make_padded_block(self->g, (void*)(&(self->str[self->str_i])), self->last_block_len, self->str_len);
 		
 		(self->last_blocks_returned)++;
 		return final_block;

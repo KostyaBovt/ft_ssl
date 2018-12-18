@@ -27,7 +27,7 @@ const uint32_t	K[] = {
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-void			calculate_block_hash(t_ctx *ctx, void *block)
+void			calculate_block_hash(t_global *g, t_ctx *ctx, void *block)
 {
 
 	// ft_printf("\n=================\n");
@@ -42,7 +42,7 @@ void			calculate_block_hash(t_ctx *ctx, void *block)
 	uint32_t *M;
 	t_ctx *temp_ctx;
 	int i;
-	int g;
+	int g_i;
 	uint32_t F;
 	// uint64_t F_temp;
 
@@ -60,9 +60,9 @@ void			calculate_block_hash(t_ctx *ctx, void *block)
 			F = md5_H(temp_ctx);
 		else
 			F = md5_I(temp_ctx);
-		g = get_word_i(i);
+		g_i = get_word_i(i);
 		// ft_printf("F = a + F(b,c,d) + X[k] + T[i] = %zu + %zu + %zu + %zu = %" PRId64 "\n", temp_ctx->a, F, K[i], M[g], temp_ctx->a + F + K[i] + M[g]);
-		F = temp_ctx->a + F + K[i] + M[g];
+		F = temp_ctx->a + F + K[i] + M[g_i];
 		temp_ctx->a = temp_ctx->d;
 		temp_ctx->d = temp_ctx->c;
 		temp_ctx->c = temp_ctx->b;
@@ -76,7 +76,7 @@ void			calculate_block_hash(t_ctx *ctx, void *block)
 	// print_ctx(ctx);
 }
 
-char *compile_hash(t_ctx *ctx)
+char *compile_hash(t_global *g, t_ctx *ctx)
 {
 	void *temp;
 
