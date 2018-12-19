@@ -1,5 +1,5 @@
 #include "../includes/ft_ssl.h"
-#include <inttypes.h>
+// #include <inttypes.h>
 
 const uint32_t	S[] = {
 	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
@@ -27,17 +27,17 @@ const uint32_t	K[] = {
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-void			calculate_block_hash(t_global *g, t_ctx *ctx, void *block)
+void			calc_block_hash_md5(t_ctx *ctx, void *block)
 {
-
-	// ft_printf("\n=================\n");
-	// ft_printf("CALULATING BLOCK 512\n");
-	// ft_printf("CTX BEFORE:\n");
-	// print_ctx(ctx);
-	// ft_printf("\nBLOCK 512\n");
-	// ft_print_memory(block, 64, "dc");
-	// print_block((uint32_t*)block);
-	// ft_printf("\n");
+	ft_printf("calc_block_hash_md5\n");
+	ft_printf("\n=================\n");
+	ft_printf("CALULATING BLOCK 512\n");
+	ft_printf("CTX BEFORE:\n");
+	print_ctx(ctx);
+	ft_printf("\nBLOCK 512\n");
+	ft_print_memory(block, 64, "dc");
+	print_block((uint32_t*)block);
+	ft_printf("\n");
 
 	uint32_t *M;
 	t_ctx *temp_ctx;
@@ -46,7 +46,7 @@ void			calculate_block_hash(t_global *g, t_ctx *ctx, void *block)
 	uint32_t F;
 	// uint64_t F_temp;
 
-	M = devide_block(block);
+	M = devide_block_md5(block);
 	temp_ctx = copy_ctx(ctx);
 
 	i = -1;
@@ -72,11 +72,12 @@ void			calculate_block_hash(t_global *g, t_ctx *ctx, void *block)
 		// print_ctx(temp_ctx);
 	}
 	merge_ctx(ctx, temp_ctx);
-	// ft_printf("CTX AFTER:\n");
-	// print_ctx(ctx);
+	ft_printf("CTX AFTER:\n");
+	print_ctx(ctx);
+	ft_printf("calculate_block_hash END\n");
 }
 
-char *compile_hash(t_global *g, t_ctx *ctx)
+char *compile_hash_md5(t_ctx *ctx)
 {
 	void *temp;
 
@@ -88,7 +89,7 @@ char *compile_hash(t_global *g, t_ctx *ctx)
 	return (char*)temp;
 }
 
-uint32_t *devide_block(void *block)
+uint32_t *devide_block_md5(void *block)
 {
 	return (uint32_t*)block;
 }

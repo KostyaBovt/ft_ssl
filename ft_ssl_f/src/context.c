@@ -42,23 +42,34 @@ t_ctx *copy_ctx(t_ctx *ctx)
 
 void print_ctx(t_ctx *ctx)
 {
-	write(1, "A: ", 3);
-	// ft_print_memory(&(ctx->a), sizeof(uint32_t), 0);
-	ft_printf("%zu", ctx->a);
-	write(1, "\n", 1);
-	write(1, "B: ", 3);
-	ft_printf("%zu", ctx->b);
-	// ft_print_memory(&(ctx->b), sizeof(uint32_t), 0);
-	write(1, "\n", 1);
-	write(1, "C: ", 3);
-	// ft_putnbr(ctx->c);
-	ft_printf("%zu", ctx->c);
-	// ft_print_memory(&(ctx->c), sizeof(uint32_t), 0);
-	write(1, "\n", 1);
-	write(1, "D: ", 3);
-	ft_printf("%zu", ctx->d);
-	// ft_print_memory(&(ctx->d), sizeof(uint32_t), 0);
-	write(1, "\n", 1);
+	ft_printf("A: %zu\n", ctx->a);
+	ft_printf("B: %zu\n", ctx->b);
+	ft_printf("C: %zu\n", ctx->c);
+	ft_printf("D: %zu\n", ctx->d);
+	ft_printf("h0: %zu\n", ctx->h0);
+	ft_printf("h1: %zu\n", ctx->h1);
+	ft_printf("h2: %zu\n", ctx->h2);
+	ft_printf("h3: %zu\n", ctx->h3);
+	ft_printf("h4: %zu\n", ctx->h4);
+	ft_printf("h5: %zu\n", ctx->h5);
+	ft_printf("h6: %zu\n", ctx->h6);
+	ft_printf("h7: %zu\n", ctx->h7);
+}
+
+void print_ctx_hex(t_ctx *ctx)
+{
+	ft_printf("A: %X\n", ctx->a);
+	ft_printf("B: %X\n", ctx->b);
+	ft_printf("C: %X\n", ctx->c);
+	ft_printf("D: %X\n", ctx->d);
+	ft_printf("h0: %X\n", ctx->h0);
+	ft_printf("h1: %X\n", ctx->h1);
+	ft_printf("h2: %X\n", ctx->h2);
+	ft_printf("h3: %X\n", ctx->h3);
+	ft_printf("h4: %X\n", ctx->h4);
+	ft_printf("h5: %X\n", ctx->h5);
+	ft_printf("h6: %X\n", ctx->h6);
+	ft_printf("h7: %X\n", ctx->h7);
 }
 
 void merge_ctx(t_ctx *ctx, t_ctx *temp_ctx)
@@ -67,4 +78,12 @@ void merge_ctx(t_ctx *ctx, t_ctx *temp_ctx)
 	ctx->b += temp_ctx->b;
 	ctx->c += temp_ctx->c;
 	ctx->d += temp_ctx->d;
+	ctx->h0 += temp_ctx->h0;
+	ctx->h1 += temp_ctx->h1;
+	ctx->h2 += temp_ctx->h2;
+	ctx->h3 += temp_ctx->h3;
+	ctx->h4 += temp_ctx->h4;
+	ctx->h5 += temp_ctx->h5;
+	ctx->h6 += temp_ctx->h6;
+	ctx->h7 += temp_ctx->h7;
 }

@@ -16,13 +16,14 @@ void			process_string(t_global *g)
 		(g->av_i)++;
 		ft_printf("we in process_string %s %s\n", g->av[g->av_i], g->mock);
 		hash = make_hash_string(g, g->av[g->av_i]);
-		ft_printf("\nFINAL HASH: %16.16m STOP\n", (void*)hash);
+		ft_printf("\nFINAL HASH: %32m STOP\n", (void*)hash);
 		// print_hash(hash, g);
 	}
 }
 
 char			*make_hash_string(t_global *g, char *str)
 {
+	ft_printf("make_hash_string\n");
 	t_ctx	*ctx;
 	void	*block;
 	t_str_iterator *str_iterator;
@@ -42,6 +43,7 @@ char			*make_hash_string(t_global *g, char *str)
 
 t_str_iterator	*init_str_iterator(t_global *g, char *str)
 {
+	ft_printf("init_str_iterator\n");
 	t_str_iterator	*new;
 
 	new = (t_str_iterator*)malloc(sizeof(t_str_iterator));
@@ -61,6 +63,7 @@ t_str_iterator	*init_str_iterator(t_global *g, char *str)
 
 void			*next_block_str(void *self_void)
 {
+	ft_printf("next_block_str\n");
 	void *final_block;
 	t_str_iterator *self;
 
