@@ -2,5 +2,5 @@
 
 uint32_t ft_rotr(uint32_t n, int shift)
 {
-	return (n >> shift) | (n << (4 - shift));
+	return (n >> shift) | (n << (32 - shift));
 }

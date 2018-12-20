@@ -46,14 +46,14 @@ void print_ctx(t_ctx *ctx)
 	ft_printf("B: %zu\n", ctx->b);
 	ft_printf("C: %zu\n", ctx->c);
 	ft_printf("D: %zu\n", ctx->d);
-	ft_printf("h0: %zu\n", ctx->h0);
-	ft_printf("h1: %zu\n", ctx->h1);
-	ft_printf("h2: %zu\n", ctx->h2);
-	ft_printf("h3: %zu\n", ctx->h3);
-	ft_printf("h4: %zu\n", ctx->h4);
-	ft_printf("h5: %zu\n", ctx->h5);
-	ft_printf("h6: %zu\n", ctx->h6);
-	ft_printf("h7: %zu\n", ctx->h7);
+	ft_printf("h0 (a): %zu\n", ctx->h0);
+	ft_printf("h1 (b): %zu\n", ctx->h1);
+	ft_printf("h2 (c): %zu\n", ctx->h2);
+	ft_printf("h3 (d): %zu\n", ctx->h3);
+	ft_printf("h4 (e): %zu\n", ctx->h4);
+	ft_printf("h5 (f): %zu\n", ctx->h5);
+	ft_printf("h6 (g): %zu\n", ctx->h6);
+	ft_printf("h7 (h): %zu\n", ctx->h7);
 }
 
 void print_ctx_hex(t_ctx *ctx)
@@ -62,14 +62,14 @@ void print_ctx_hex(t_ctx *ctx)
 	ft_printf("B: %X\n", ctx->b);
 	ft_printf("C: %X\n", ctx->c);
 	ft_printf("D: %X\n", ctx->d);
-	ft_printf("h0: %X\n", ctx->h0);
-	ft_printf("h1: %X\n", ctx->h1);
-	ft_printf("h2: %X\n", ctx->h2);
-	ft_printf("h3: %X\n", ctx->h3);
-	ft_printf("h4: %X\n", ctx->h4);
-	ft_printf("h5: %X\n", ctx->h5);
-	ft_printf("h6: %X\n", ctx->h6);
-	ft_printf("h7: %X\n", ctx->h7);
+	ft_printf("h0 (a): %X\n", ctx->h0);
+	ft_printf("h1 (b): %X\n", ctx->h1);
+	ft_printf("h2 (c): %X\n", ctx->h2);
+	ft_printf("h3 (d): %X\n", ctx->h3);
+	ft_printf("h4 (e): %X\n", ctx->h4);
+	ft_printf("h5 (f): %X\n", ctx->h5);
+	ft_printf("h6 (g): %X\n", ctx->h6);
+	ft_printf("h7 (h): %X\n", ctx->h7);
 }
 
 void merge_ctx(t_ctx *ctx, t_ctx *temp_ctx)

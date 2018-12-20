@@ -30,6 +30,15 @@ void			calc_block_hash_sha256(t_ctx *ctx, void *block)
 	uint32_t t1;
 	uint32_t t2;
 	uint32_t Ch;
+
+	uint32_t I;
+	uint32_t J;
+	uint32_t KK;
+
+	uint32_t P;
+	uint32_t Q;
+	uint32_t R;
+
 	int i;
 	t_ctx *t_ctx;
 
@@ -37,21 +46,71 @@ void			calc_block_hash_sha256(t_ctx *ctx, void *block)
 	i = 15;
 	while (++i < 64)
 	{
+		I = ft_rotr(M[i - 15], 7);
+		J = ft_rotr(M[i - 15], 18);
+		KK = M[i - 15] >> 3;
+		// ft_printf("I: ");
+		// ft_print_memory((void*)(&I), 4, "");
+		// ft_printf("%X", I);
+		// ft_printf("\n");
+		// ft_printf("J: ");
+		// ft_print_memory((void*)(&J), 4, "");
+		// ft_printf("%X", J);
+		// ft_printf("\n");
+		// ft_printf("K: ");
+		// ft_print_memory((void*)(&KK), 4, "");
+		// ft_printf("%X", KK);
+		// ft_printf("\n");
 
-	    s0 = (ft_rotr(M[i - 15], 7)) ^ (ft_rotr(M[i - 15], 18)) ^ (M[i - 15] >> 3);
-	    s1 = (ft_rotr(M[i - 2], 17)) ^ (ft_rotr(M[i - 2], 19)) ^ (M[i - 2] >> 10);
+		s0 = I ^ J ^ KK;
+		// ft_printf("s0: ");
+		// ft_print_memory((void*)(&s0), 4, "");
+		// ft_printf("%X", s0);
+		// ft_printf("\n");
+
+		P = ft_rotr(M[i - 2], 17);
+		R = ft_rotr(M[i - 2], 19);
+		Q = (M[i - 2] >> 10);
+		// ft_printf("P: ");
+		// ft_print_memory((void*)(&P), 4, "");
+		// ft_printf("%X", P);
+		// ft_printf("\n");
+		// ft_printf("R: ");
+		// ft_print_memory((void*)(&R), 4, "");
+		// ft_printf("%X", R);
+		// ft_printf("\n");
+		// ft_printf("Q: ");
+		// ft_print_memory((void*)(&Q), 4, "");
+		// ft_printf("%X", Q);
+		// ft_printf("\n");
+
+		s1 = P ^ R ^ Q;
+		// ft_printf("s1: ");
+		// ft_print_memory((void*)(&s1), 4, "");
+		// ft_printf("%X", s1);
+		// ft_printf("\n");
+
+
+	    // s0 = (ft_rotr(M[i - 15], 7)) ^ (ft_rotr(M[i - 15], 18)) ^ (M[i - 15] >> 3);
+	    // s1 = (ft_rotr(M[i - 2], 17)) ^ (ft_rotr(M[i - 2], 19)) ^ (M[i - 2] >> 10);
+
 	    M[i] = M[i - 16] + s0 + M[i - 7] + s1;
+		// ft_printf("w[%d]: ", i);
+		// ft_print_memory((void*)(&(M[i])), 4, "");
+		// ft_printf("%X", M[i]);
+		// ft_printf("\n");
+
 	}
 
-	ft_printf("calc_block_hash_md5\n");
-	ft_printf("\n=================\n");
-	ft_printf("CALULATING BLOCK 512\n");
-	ft_printf("CTX BEFORE:\n");
-	print_ctx(ctx);
-	ft_printf("\nBLOCK 512\n");
-	ft_print_memory((void*)M, 256, "dc");
-	print_block_sha256(M);
-	ft_printf("\n");
+	// ft_printf("calc_block_hash_md5\n");
+	// ft_printf("\n=================\n");
+	// ft_printf("CALULATING BLOCK 512\n");
+	// ft_printf("CTX BEFORE:\n");
+	// print_ctx(ctx);
+	// ft_printf("\nBLOCK 512\n");
+	// ft_print_memory((void*)M, 256, "dc");
+	// print_block_sha256(M);
+	// ft_printf("\n");
 
 	t_ctx = copy_ctx(ctx);
 
@@ -73,12 +132,12 @@ void			calc_block_hash_sha256(t_ctx *ctx, void *block)
        	t_ctx->h2 = t_ctx->h1;
        	t_ctx->h1 = t_ctx->h0;
        	t_ctx->h0 = t1 + t2;
-   	    ft_printf("TEMP CTX after iteration [%d]:\n", i);
-	    print_ctx_hex(t_ctx);
+   	    // ft_printf("TEMP CTX after iteration [%d]:\n", i);
+	    // print_ctx_hex(t_ctx);
     }
     merge_ctx(ctx, t_ctx);
-    ft_printf("CTX after BLOCK 512:\n");
-    print_ctx_hex(ctx);
+    // ft_printf("CTX after BLOCK 512:\n");
+    // print_ctx_hex(ctx);
 }
 
 
@@ -118,11 +177,18 @@ char *compile_hash_sha256(t_ctx *ctx)
 void print_block_sha256(uint32_t *block)
 {
 	int i;
+	int j;
+	int len;
 
 	i = 0;
 	while (i < 64)
 	{
-		ft_printf("word [%d]: %X\n", i, block[i]);
+		ft_printf("word [%d]: %X | ", i, block[i]);
+		len = sizeof(*block);
+		j = -1;
+		while (++j < len)
+			ft_print_byte(((unsigned char *)(&block[i]))[j]);
+		ft_printf("\n");
 		i++;
 	}
 }

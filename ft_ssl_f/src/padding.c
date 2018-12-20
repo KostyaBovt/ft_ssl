@@ -2,7 +2,7 @@
 
 void	*make_last_padded_block(t_global *g, unsigned long long int msg_len)
 {
-	ft_printf("make_last_padded_block\n");
+	// ft_printf("make_last_padded_block\n");
 	void *new_block;
 	uint64_t n;
 
@@ -18,7 +18,7 @@ void	*make_last_padded_block(t_global *g, unsigned long long int msg_len)
 
 void	*make_padded_block(t_global *g, void *block_start, int last_block_len, unsigned long long int msg_len)
 {
-	ft_printf("make_padded_block\n");
+	// ft_printf("make_padded_block\n");
 	unsigned char determinator;
 	void *new_block;
 	uint64_t n;
