@@ -6,8 +6,7 @@ void	process_file(t_global *g, char *file)
 	void	*block;
 	t_fd_iterator *fd_iterator;
 	int fd;
-	char *hash;
-	int i;
+	t_hash *hash;
 
 	g->reach_files = 1;
 	g->input_was = 1;
@@ -18,6 +17,9 @@ void	process_file(t_global *g, char *file)
 		print_erorr_file(file);
 		return;
 	}
+
+	g->input_msg = file;
+	g->input_type = 'f';
 
 	//create context
 	ctx = init_ctx();
@@ -31,14 +33,7 @@ void	process_file(t_global *g, char *file)
 
 
 	hash = compile_hash(g, ctx);
-	i = -1;
-	while (++i < 8)
-		ft_printf("%X ", ((uint32_t*)hash)[i]);
-	ft_printf("\n");
-
-	// return result hash
-	// ft_printf("\nFINAL HASH: %16m STOP\n", (void*)compile_hash(g, ctx));
-	// return compile_hash(ctx);
+	output_hash(g, hash);
 }
 
 t_fd_iterator	*init_fd_iterator(t_global *g, int fd)

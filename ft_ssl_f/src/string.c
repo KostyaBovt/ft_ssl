@@ -2,8 +2,7 @@
 
 void			process_string(t_global *g)
 {
-	char *hash;
-	int i;
+	t_hash *hash;
 
 	g->input_was = 1;
 	if (g->ac - 1 == g->av_i) // if this is last av
@@ -15,18 +14,15 @@ void			process_string(t_global *g)
 	else
 	{
 		(g->av_i)++;
-		ft_printf("we in process_string %s %s\n", g->av[g->av_i], g->mock);
+		// ft_printf("we in process_string %s %s\n", g->av[g->av_i], g->mock);
+		g->input_msg = g->av[g->av_i];
+		g->input_type = 's';
 		hash = make_hash_string(g, g->av[g->av_i]);
-		i = -1;
-		while (++i < 8)
-			ft_printf("%X ", ((uint32_t*)hash)[i]);
-		ft_printf("\n");
-		// ft_printf("\nFINAL HASH: %32m STOP\n", (void*)hash);
-		// print_hash(hash, g);
+		output_hash(g, hash);
 	}
 }
 
-char			*make_hash_string(t_global *g, char *str)
+t_hash			*make_hash_string(t_global *g, char *str)
 {
 	ft_printf("make_hash_string\n");
 	t_ctx	*ctx;

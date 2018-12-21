@@ -5,9 +5,13 @@ void	process_stdin(t_global *g)
 	t_fd_iterator *fd_iterator;
 	void	*block;
 	t_ctx	*ctx;
+	t_hash *hash;
 
 	g->input_was = 1;
-	ft_printf("we in process_stdin %s\n", g->mock);
+	// ft_printf("we in process_stdin %s\n", g->mock);
+
+	g->input_msg = "stdin";
+	g->input_type = 'i';
 
 	//create context
 	ctx = init_ctx();
@@ -19,8 +23,6 @@ void	process_stdin(t_global *g)
 		//pass block and context in loop to hashing function
 		calculate_block_hash(g, ctx, block);
 
-	// return result hash
-	ft_printf("\nFINAL HASH: %16m STOP\n", (void*)compile_hash(g, ctx));
-	// return compile_hash(ctx);
-
+	hash = compile_hash(g, ctx);
+	output_hash(g, hash);
 }

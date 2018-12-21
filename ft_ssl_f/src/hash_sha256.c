@@ -158,20 +158,32 @@ uint32_t *devide_block_sha256(void *block)
 	return new;
 }
 
-char *compile_hash_sha256(t_ctx *ctx)
+t_hash *compile_hash_sha256(t_ctx *ctx)
 {
-	void *temp;
+	uint32_t *temp;
+	t_hash *hash;
 
-	temp = (void*)malloc(32);
-	ft_memcpy(temp, &(ctx->h0), 4);
-	ft_memcpy(&temp[4], &(ctx->h1), 4);
-	ft_memcpy(&temp[8], &(ctx->h2), 4);
-	ft_memcpy(&temp[12], &(ctx->h3), 4);
-	ft_memcpy(&temp[16], &(ctx->h4), 4);
-	ft_memcpy(&temp[20], &(ctx->h5), 4);
-	ft_memcpy(&temp[24], &(ctx->h6), 4);
-	ft_memcpy(&temp[28], &(ctx->h7), 4);
-	return (char*)temp;
+	temp = (uint32_t*)malloc(sizeof(uint32_t) * 8);
+	temp[0] = ctx->h0;
+	temp[1] = ctx->h1;
+	temp[2] = ctx->h2;
+	temp[3] = ctx->h3;
+	temp[4] = ctx->h4;
+	temp[5] = ctx->h5;
+	temp[6] = ctx->h6;
+	temp[7] = ctx->h7;
+	// ft_memcpy(temp, &(ctx->h0), 4);
+	// ft_memcpy(&temp[4], &(ctx->h1), 4);
+	// ft_memcpy(&temp[8], &(ctx->h2), 4);
+	// ft_memcpy(&temp[12], &(ctx->h3), 4);
+	// ft_memcpy(&temp[16], &(ctx->h4), 4);
+	// ft_memcpy(&temp[20], &(ctx->h5), 4);
+	// ft_memcpy(&temp[24], &(ctx->h6), 4);
+	// ft_memcpy(&temp[28], &(ctx->h7), 4);
+	hash = (t_hash*)malloc(sizeof(t_hash));
+	hash->hash = temp;
+	hash->len = 8;
+	return hash;
 }
 
 void print_block_sha256(uint32_t *block)

@@ -8,6 +8,13 @@
 # include <stdlib.h> // malloc free
 # include <stdio.h> // printf
 
+
+typedef struct			s_hash
+{
+	uint32_t			*hash;
+	int					len;
+}						t_hash;
+
 typedef struct			s_global
 {
 	char				*alg;
@@ -18,6 +25,8 @@ typedef struct			s_global
 	int					av_i;
 	char				reach_files;
 	char				input_was;
+	char				*input_msg;
+	char				input_type;
 	char				*mock;
 }						t_global;
 
@@ -112,13 +121,13 @@ t_global		*init_global(int argc, char **argv);
 **hash.c
 */
 void			calculate_block_hash(t_global *g, t_ctx *ctx, void *block);
-char			*compile_hash(t_global *g, t_ctx *ctx);
+t_hash			*compile_hash(t_global *g, t_ctx *ctx);
 
 /*
 **hash_md5.c
 */
 void			calc_block_hash_md5(t_ctx *ctx, void *block);
-char			*compile_hash_md5(t_ctx *ctx);
+t_hash			*compile_hash_md5(t_ctx *ctx);
 uint32_t		*devide_block_md5(void *block);
 int				get_word_i(int i);
 void			print_block(uint32_t *block);
@@ -128,7 +137,7 @@ void			print_block(uint32_t *block);
 */
 void			calc_block_hash_sha256(t_ctx *ctx, void *block);
 uint32_t		*devide_block_sha256(void *block);
-char			*compile_hash_sha256(t_ctx *ctx);
+t_hash			*compile_hash_sha256(t_ctx *ctx);
 void			print_block_sha256(uint32_t *block);
 
 /*
@@ -142,6 +151,12 @@ int				main(int argc, char **argv);
 void			call_main_controller(t_global *global);
 void			process_av(t_global *g, char *av);
 void			add_flag(t_global *g, char *flag);
+
+/*
+**output_h.c
+*/
+void			output_hash(t_global *g, t_hash *hash);
+
 
 /*
 **padding.c
@@ -168,7 +183,7 @@ void			process_stdin(t_global *g);
 **string.c
 */
 void			process_string(t_global *g);
-char			*make_hash_string(t_global *g, char *str);
+t_hash			*make_hash_string(t_global *g, char *str);
 t_str_iterator	*init_str_iterator(t_global *g, char *str);
 void			*next_block_str(void *self);
 
