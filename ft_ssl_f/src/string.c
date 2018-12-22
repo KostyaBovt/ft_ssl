@@ -19,15 +19,17 @@ void			process_string(t_global *g)
 		g->input_type = 's';
 		hash = make_hash_string(g, g->av[g->av_i]);
 		output_hash(g, hash);
+		free_t_hash(&hash);
 	}
 }
 
 t_hash			*make_hash_string(t_global *g, char *str)
 {
-	ft_printf("make_hash_string\n");
+	// ft_printf("make_hash_string\n");
 	t_ctx	*ctx;
 	void	*block;
 	t_str_iterator *str_iterator;
+	t_hash *hash;
 
 	//create context
 	ctx = init_ctx();
@@ -35,16 +37,22 @@ t_hash			*make_hash_string(t_global *g, char *str)
 	//iterate string over blocks of 512 bits (64 bytes)
 	str_iterator = init_str_iterator(g, str);
 	while ((block = str_iterator->next((void*)str_iterator)))
+	{
 		//pass block and context in loop to hashing function
 		calculate_block_hash(g, ctx, block);
+		// free(block);
+	}
 
 	// return result hash
-	return compile_hash(g, ctx);
+	free(str_iterator);
+	hash = compile_hash(g, ctx);
+	free(ctx);
+	return hash;
 }
 
 t_str_iterator	*init_str_iterator(t_global *g, char *str)
 {
-	ft_printf("init_str_iterator\n");
+	// ft_printf("init_str_iterator\n");
 	t_str_iterator	*new;
 
 	new = (t_str_iterator*)malloc(sizeof(t_str_iterator));
@@ -64,7 +72,7 @@ t_str_iterator	*init_str_iterator(t_global *g, char *str)
 
 void			*next_block_str(void *self_void)
 {
-	ft_printf("next_block_str\n");
+	// ft_printf("next_block_str\n");
 	void *final_block;
 	t_str_iterator *self;
 

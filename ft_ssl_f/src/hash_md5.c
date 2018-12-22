@@ -29,15 +29,15 @@ const uint32_t	K[] = {
 
 void			calc_block_hash_md5(t_ctx *ctx, void *block)
 {
-	ft_printf("calc_block_hash_md5\n");
-	ft_printf("\n=================\n");
-	ft_printf("CALULATING BLOCK 512\n");
-	ft_printf("CTX BEFORE:\n");
-	print_ctx(ctx);
-	ft_printf("\nBLOCK 512\n");
-	ft_print_memory(block, 64, "dc");
-	print_block((uint32_t*)block);
-	ft_printf("\n");
+	// ft_printf("calc_block_hash_md5\n");
+	// ft_printf("\n=================\n");
+	// ft_printf("CALULATING BLOCK 512\n");
+	// ft_printf("CTX BEFORE:\n");
+	// print_ctx(ctx);
+	// ft_printf("\nBLOCK 512\n");
+	// ft_print_memory(block, 64, "dc");
+	// print_block((uint32_t*)block);
+	// ft_printf("\n");
 
 	uint32_t *M;
 	t_ctx *temp_ctx;
@@ -61,20 +61,21 @@ void			calc_block_hash_md5(t_ctx *ctx, void *block)
 		else
 			F = md5_I(temp_ctx);
 		g_i = get_word_i(i);
-		ft_printf("F = a + F(b,c,d) + X[k] + T[i] = %zu + %zu + %zu + %zu = %" PRId64 "\n", temp_ctx->a, F, K[i], M[g_i], temp_ctx->a + F + K[i] + M[g_i]);
+		// ft_printf("F = a + F(b,c,d) + X[k] + T[i] = %zu + %zu + %zu + %zu = %" PRId64 "\n", temp_ctx->a, F, K[i], M[g_i], temp_ctx->a + F + K[i] + M[g_i]);
 		F = temp_ctx->a + F + K[i] + M[g_i];
 		temp_ctx->a = temp_ctx->d;
 		temp_ctx->d = temp_ctx->c;
 		temp_ctx->c = temp_ctx->b;
-		ft_printf("b + (F << S[i]) = b + (%zu << %zu)= %zu + %zu = %zu\n", F, S[i], temp_ctx->b, (F << S[i]), temp_ctx->b + (F << S[i]));
+		// ft_printf("b + (F << S[i]) = b + (%zu << %zu)= %zu + %zu = %zu\n", F, S[i], temp_ctx->b, (F << S[i]), temp_ctx->b + (F << S[i]));
 		temp_ctx->b = temp_ctx->b + ((F << S[i]) | (F >> (32 - S[i])));
-		ft_printf("TEMP_CTX AFTER [%d]/[63] cycle:\n", i);
-		print_ctx(temp_ctx);
+		// ft_printf("TEMP_CTX AFTER [%d]/[63] cycle:\n", i);
+		// print_ctx(temp_ctx);
 	}
 	merge_ctx(ctx, temp_ctx);
-	ft_printf("CTX AFTER:\n");
-	print_ctx(ctx);
-	ft_printf("calculate_block_hash END\n");
+	free(temp_ctx);
+	// ft_printf("CTX AFTER:\n");
+	// print_ctx(ctx);
+	// ft_printf("calculate_block_hash END\n");
 }
 
 t_hash *compile_hash_md5(t_ctx *ctx)

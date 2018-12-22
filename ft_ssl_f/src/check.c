@@ -4,6 +4,7 @@
 void	check_command(t_global *g)
 {
 	char	*commands[3];
+	char	*print_commands[3];
 	int		i;
 
 	if (g->ac < 2)
@@ -15,11 +16,14 @@ void	check_command(t_global *g)
 	commands[0] = "md5";
 	commands[1] = "sha256";
 	commands[2] = NULL;
+	print_commands[0] = "MD5";
+	print_commands[1] = "SHA256";
 	i = -1;
 	while (commands[++i])
 		if (!ft_strcmp(commands[i], g->av[1]))
 		{
 			g->alg = commands[i];
+			g->alg_print = print_commands[i];
 			return;
 		}
 	

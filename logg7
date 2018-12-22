@@ -1,0 +1,29 @@
+Process:         ft_ssl [32624]
+Path:            /Users/kbovt/p/ssl/ft_ssl
+Load Address:    0x100823000
+Identifier:      ft_ssl
+Version:         ???
+Code Type:       X86-64
+Parent Process:  zsh [26864]
+
+Date/Time:       2018-12-22 16:29:26.769 +0200
+Launch Time:     2018-12-22 16:29:05.779 +0200
+OS Version:      Mac OS X 10.13.4 (17E199)
+Report Version:  7
+Analysis Tool:   /usr/bin/leaks
+
+Physical footprint:         328K
+Physical footprint (peak):  328K
+----
+
+leaks Report Version: 3.0
+Process 32624: 162 nodes malloced for 13 KB
+Process 32624: 7 leaks for 352 total leaked bytes.
+
+Leak: 0x7fb05a402730  size=48  zone: DefaultMallocZone_0x100830000
+Leak: 0x7fb05a402760  size=64  zone: DefaultMallocZone_0x100830000
+Leak: 0x7fb05a700000  size=32  zone: DefaultMallocZone_0x100830000
+Leak: 0x7fb05a700020  size=16  zone: DefaultMallocZone_0x100830000
+Leak: 0x7fb05a700030  size=64  zone: DefaultMallocZone_0x100830000
+Leak: 0x7fb05a700070  size=64  zone: DefaultMallocZone_0x100830000
+Leak: 0x7fb05a7000b0  size=64  zone: DefaultMallocZone_0x100830000

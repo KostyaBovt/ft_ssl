@@ -10,7 +10,7 @@ void	process_file(t_global *g, char *file)
 
 	g->reach_files = 1;
 	g->input_was = 1;
-	ft_printf("we in process_file %s %s\n", file, g->mock);
+	// ft_printf("we in process_file %s %s\n", file, g->mock);
 
 	if ((fd = open(file, O_RDONLY)) < 0)
 	{
@@ -28,12 +28,16 @@ void	process_file(t_global *g, char *file)
 	if (!(fd_iterator = init_fd_iterator(g, fd)))
 		return;
 	while ((block = fd_iterator->next((void*)fd_iterator)))
+	{
 		//pass block and context in loop to hashing function
 		calculate_block_hash(g, ctx, block);
+		free(block);
+	}
 
 
 	hash = compile_hash(g, ctx);
 	output_hash(g, hash);
+	free_t_hash(&hash);
 }
 
 t_fd_iterator	*init_fd_iterator(t_global *g, int fd)
@@ -71,6 +75,7 @@ void			*next_block_fd(void *self_void)
 	rd = read(self->fd, buf, 64);
 	if (rd == 64)
 	{
+		self->last_block_len = 64;
 		self->total_len += 64;
 		return buf;
 	}

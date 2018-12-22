@@ -136,6 +136,8 @@ void			calc_block_hash_sha256(t_ctx *ctx, void *block)
 	    // print_ctx_hex(t_ctx);
     }
     merge_ctx(ctx, t_ctx);
+    free(t_ctx);
+    free(M);
     // ft_printf("CTX after BLOCK 512:\n");
     // print_ctx_hex(ctx);
 }

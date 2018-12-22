@@ -18,6 +18,7 @@ typedef struct			s_hash
 typedef struct			s_global
 {
 	char				*alg;
+	char				*alg_print;
 	int					ac;
 	char				**av;
 	char				r;
@@ -141,6 +142,12 @@ t_hash			*compile_hash_sha256(t_ctx *ctx);
 void			print_block_sha256(uint32_t *block);
 
 /*
+**kill_leaks.c
+*/
+void			free_t_global(t_global **g_p);
+void			free_t_hash(t_hash **hash);
+
+/*
 **main.c
 */
 int				main(int argc, char **argv);
@@ -156,7 +163,8 @@ void			add_flag(t_global *g, char *flag);
 **output_h.c
 */
 void			output_hash(t_global *g, t_hash *hash);
-
+void			output_the_hash(t_global *g, t_hash *hash);
+void			print_hash_hex(unsigned char c);
 
 /*
 **padding.c
@@ -178,6 +186,7 @@ void			print_usage_ssl();
 **stdin.c
 */
 void			process_stdin(t_global *g);
+void			append_to_msg(t_global *g, void *block, t_fd_iterator *fd_iterator);
 
 /*
 **string.c
