@@ -42,6 +42,7 @@ typedef struct			s_str_iterator
 	int					last_block_len;
 	int					last_blocks_n;
 	int					last_blocks_returned;
+	char				malloced;
 	void				*(*next)(void *self);
 	t_global 			*g;
 }						t_str_iterator;

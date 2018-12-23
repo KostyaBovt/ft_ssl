@@ -40,6 +40,8 @@ t_hash			*make_hash_string(t_global *g, char *str)
 	{
 		//pass block and context in loop to hashing function
 		calculate_block_hash(g, ctx, block);
+		if (str_iterator->malloced)
+			free(block);
 		// free(block);
 	}
 
@@ -64,6 +66,7 @@ t_str_iterator	*init_str_iterator(t_global *g, char *str)
 	new->last_block_len = new->str_len % 64;
 	new->last_blocks_n = new->last_block_len < 56 ? 1 : 2;
 	new->last_blocks_returned = 0;
+	new->malloced = 0;
 	new->next = &next_block_str;
 	new->g = g;
 
@@ -93,6 +96,7 @@ void			*next_block_str(void *self_void)
 			final_block = make_padded_block(self->g, (void*)(&(self->str[self->str_i])), self->last_block_len, self->str_len);
 		
 		(self->last_blocks_returned)++;
+		self->malloced = 1;
 		return final_block;
 	}
 	else

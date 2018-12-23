@@ -34,8 +34,9 @@ void	process_file(t_global *g, char *file)
 		free(block);
 	}
 
-
+	free(fd_iterator);
 	hash = compile_hash(g, ctx);
+	free(ctx);
 	output_hash(g, hash);
 	free_t_hash(&hash);
 }
@@ -63,8 +64,8 @@ void			*next_block_fd(void *self_void)
 	t_fd_iterator *self;
 	char	*buf;
 	int rd;
+	void *block;
 
-	buf = (char*)malloc(64);
 	self = (t_fd_iterator*)self_void;
 	if (self->last_blocks_n == self->last_blocks_returned && self->last_blocks_n)
 		return NULL;
@@ -72,6 +73,7 @@ void			*next_block_fd(void *self_void)
 		self->last_blocks_returned = 2;
 		return make_last_padded_block(self->g, self->total_len);
 	}
+	buf = (char*)malloc(64);
 	rd = read(self->fd, buf, 64);
 	if (rd == 64)
 	{
@@ -85,7 +87,9 @@ void			*next_block_fd(void *self_void)
 		self->total_len += rd;
 		self->last_blocks_n = self->last_block_len < 56 ? 1 : 2;
 		self->last_blocks_returned = 1;
-		return make_padded_block(self->g, (void*)(buf), self->last_block_len, self->total_len);
+		block = make_padded_block(self->g, (void*)(buf), self->last_block_len, self->total_len);
+		free(buf);
+		return block;
 	}
 	return NULL;
 }

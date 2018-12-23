@@ -17,6 +17,6 @@ int main(int ac, char **av)
 	// return(0);
 	g = init_global(ac, av);
 	call_main_controller(g);
-	// while(1);
+	while(1);
 	return(0);
 }

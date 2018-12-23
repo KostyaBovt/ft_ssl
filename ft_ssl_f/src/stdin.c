@@ -23,12 +23,15 @@ void	process_stdin(t_global *g)
 		append_to_msg(g, block, fd_iterator);
 		//pass block and context in loop to hashing function
 		calculate_block_hash(g, ctx, block);
-		
+		free(block);
 	}
 
+	free(fd_iterator);
 	hash = compile_hash(g, ctx);
+	free(ctx);
 	output_hash(g, hash);
 	free_t_hash(&hash);
+	free(g->input_msg);
 }
 
 void append_to_msg(t_global *g, void *block, t_fd_iterator *fd_iterator)
