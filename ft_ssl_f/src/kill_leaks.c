@@ -1,19 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   kill_leaks.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbovt <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/24 18:19:51 by kbovt             #+#    #+#             */
+/*   Updated: 2018/12/24 18:19:53 by kbovt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ssl.h"
 
-void free_t_global(t_global **g_p)
-{	
-	t_global *g;
-
-	g = *g_p;
-
-	// free(g->alg);
-	// free(g->alg_print);
-	// free(g->input_msg);
-	// free(g->mock);
-	free(*g_p);
-}
-
-void free_t_hash(t_hash **hash)
+void	free_t_hash(t_hash **hash)
 {
 	free((*hash)->hash);
 	free(*hash);

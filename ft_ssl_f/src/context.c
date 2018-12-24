@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   context.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbovt <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/24 18:18:22 by kbovt             #+#    #+#             */
+/*   Updated: 2018/12/24 18:18:25 by kbovt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ssl.h"
 
-t_ctx *init_ctx()
+t_ctx	*init_ctx(void)
 {
-	t_ctx *new;
+	t_ctx	*new;
 
 	new = (t_ctx*)malloc(sizeof(t_ctx));
 	new->a = 0x67452301;
@@ -17,12 +29,12 @@ t_ctx *init_ctx()
 	new->h5 = 0x9B05688C;
 	new->h6 = 0x1F83D9AB;
 	new->h7 = 0x5BE0CD19;
-	return new;
+	return (new);
 }
 
-t_ctx *copy_ctx(t_ctx *ctx)
+t_ctx	*copy_ctx(t_ctx *ctx)
 {
-	t_ctx *new;
+	t_ctx	*new;
 
 	new = (t_ctx*)malloc(sizeof(t_ctx));
 	new->a = ctx->a;
@@ -37,10 +49,10 @@ t_ctx *copy_ctx(t_ctx *ctx)
 	new->h5 = ctx->h5;
 	new->h6 = ctx->h6;
 	new->h7 = ctx->h7;
-	return new;
+	return (new);
 }
 
-void print_ctx(t_ctx *ctx)
+void	print_ctx(t_ctx *ctx)
 {
 	ft_printf("A: %zu\n", ctx->a);
 	ft_printf("B: %zu\n", ctx->b);
@@ -56,7 +68,7 @@ void print_ctx(t_ctx *ctx)
 	ft_printf("h7 (h): %zu\n", ctx->h7);
 }
 
-void print_ctx_hex(t_ctx *ctx)
+void	print_ctx_hex(t_ctx *ctx)
 {
 	ft_printf("A: %X\n", ctx->a);
 	ft_printf("B: %X\n", ctx->b);
@@ -72,7 +84,7 @@ void print_ctx_hex(t_ctx *ctx)
 	ft_printf("h7 (h): %X\n", ctx->h7);
 }
 
-void merge_ctx(t_ctx *ctx, t_ctx *temp_ctx)
+void	merge_ctx(t_ctx *ctx, t_ctx *temp_ctx)
 {
 	ctx->a += temp_ctx->a;
 	ctx->b += temp_ctx->b;

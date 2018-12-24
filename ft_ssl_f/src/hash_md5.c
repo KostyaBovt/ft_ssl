@@ -1,14 +1,25 @@
-#include "../includes/ft_ssl.h"
-#include <inttypes.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash_md5.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbovt <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/24 18:19:21 by kbovt             #+#    #+#             */
+/*   Updated: 2018/12/24 18:19:24 by kbovt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-const uint32_t	S[] = {
+#include "../includes/ft_ssl.h"
+
+const uint32_t	g_s[] = {
 	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
 	4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 };
 
-const uint32_t	K[] = {
+const uint32_t	g_k[] = {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 	0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -29,100 +40,70 @@ const uint32_t	K[] = {
 
 void			calc_block_hash_md5(t_ctx *ctx, void *block)
 {
-	// ft_printf("calc_block_hash_md5\n");
-	// ft_printf("\n=================\n");
-	// ft_printf("CALULATING BLOCK 512\n");
-	// ft_printf("CTX BEFORE:\n");
-	// print_ctx(ctx);
-	// ft_printf("\nBLOCK 512\n");
-	// ft_print_memory(block, 64, "dc");
-	// print_block((uint32_t*)block);
-	// ft_printf("\n");
+	uint32_t	*m;
+	t_ctx		*temp_ctx;
+	int			i;
+	int			g_i;
+	uint32_t	f;
 
-	uint32_t *M;
-	t_ctx *temp_ctx;
-	int i;
-	int g_i;
-	uint32_t F;
-	// uint64_t F_temp;
-
-	M = devide_block_md5(block);
+	m = devide_block_md5(block);
 	temp_ctx = copy_ctx(ctx);
-
 	i = -1;
 	while (++i < 64)
 	{
-		if (i < 16)
-			F = md5_F(temp_ctx);
-		else if (i < 32)
-			F = md5_G(temp_ctx);
-		else if (i < 48)
-			F = md5_H(temp_ctx);
-		else
-			F = md5_I(temp_ctx);
+		f = apply_md5_f(i, temp_ctx);
 		g_i = get_word_i(i);
-		// ft_printf("F = a + F(b,c,d) + X[k] + T[i] = %zu + %zu + %zu + %zu = %" PRId64 "\n", temp_ctx->a, F, K[i], M[g_i], temp_ctx->a + F + K[i] + M[g_i]);
-		F = temp_ctx->a + F + K[i] + M[g_i];
+		f = temp_ctx->a + f + g_k[i] + m[g_i];
 		temp_ctx->a = temp_ctx->d;
 		temp_ctx->d = temp_ctx->c;
 		temp_ctx->c = temp_ctx->b;
-		// ft_printf("b + (F << S[i]) = b + (%zu << %zu)= %zu + %zu = %zu\n", F, S[i], temp_ctx->b, (F << S[i]), temp_ctx->b + (F << S[i]));
-		temp_ctx->b = temp_ctx->b + ((F << S[i]) | (F >> (32 - S[i])));
-		// ft_printf("TEMP_CTX AFTER [%d]/[63] cycle:\n", i);
-		// print_ctx(temp_ctx);
+		temp_ctx->b = temp_ctx->b + ((f << g_s[i]) | (f >> (32 - g_s[i])));
 	}
 	merge_ctx(ctx, temp_ctx);
 	free(temp_ctx);
-	// ft_printf("CTX AFTER:\n");
-	// print_ctx(ctx);
-	// ft_printf("calculate_block_hash END\n");
 }
 
-t_hash *compile_hash_md5(t_ctx *ctx)
+uint32_t		apply_md5_f(int i, t_ctx *temp_ctx)
 {
-	t_hash *hash;
-	uint32_t *temp;
+	if (i < 16)
+		return (md5_f(temp_ctx));
+	else if (i < 32)
+		return (md5_g(temp_ctx));
+	else if (i < 48)
+		return (md5_h(temp_ctx));
+	else
+		return (md5_i(temp_ctx));
+}
+
+t_hash			*compile_hash_md5(t_ctx *ctx)
+{
+	t_hash		*hash;
+	uint32_t	*temp;
 
 	temp = (uint32_t*)malloc(sizeof(uint32_t) * 4);
 	temp[0] = ctx->a;
 	temp[1] = ctx->b;
 	temp[2] = ctx->c;
 	temp[3] = ctx->d;
-	// ft_memcpy(temp, &(ctx->a), 4);
-	// ft_memcpy(&temp[4], &(ctx->b), 4);
-	// ft_memcpy(&temp[8], &(ctx->c), 4);
-	// ft_memcpy(&temp[12], &(ctx->d), 4);
 	hash = (t_hash*)malloc(sizeof(t_hash));
 	hash->hash = temp;
-	hash->len = 4; 
-	return hash;
+	hash->len = 4;
+	return (hash);
 }
 
-uint32_t *devide_block_md5(void *block)
+uint32_t		*devide_block_md5(void *block)
 {
 	return (uint32_t*)block;
 }
 
-int get_word_i(int i)
+int				get_word_i(int i)
 {
 	if (i < 16)
-		return i;
+		return (i);
 	else if (i < 32)
 		return (5 * i + 1) % 16;
 	else if (i < 48)
 		return (3 * i + 5) % 16;
 	else
 		return (7 * i) % 16;
-}
-
-void print_block(uint32_t *block)
-{
-	int i;
-
-	i = 0;
-	while (i < 16)
-	{
-		ft_printf("word [%d]: %zu\n", i, block[i]);
-		i++;
-	}
 }

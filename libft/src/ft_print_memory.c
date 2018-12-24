@@ -37,5 +37,4 @@ void	ft_print_memory(void *ptr, int length, char *flags)
 		}
 		i++;
 	}
-	// write(1, "\n", 1);
 }

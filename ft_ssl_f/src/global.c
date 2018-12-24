@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   global.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbovt <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/24 18:18:53 by kbovt             #+#    #+#             */
+/*   Updated: 2018/12/24 18:18:55 by kbovt            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/ft_ssl.h"
 
-t_global *init_global(int ac, char **av)
+t_global	*init_global(int ac, char **av)
 {
 	t_global	*new_global;
 
@@ -13,5 +25,5 @@ t_global *init_global(int ac, char **av)
 	new_global->reach_files = 0;
 	new_global->input_was = 0;
 	new_global->mock = "mock";
-	return(new_global);
+	return (new_global);
 }

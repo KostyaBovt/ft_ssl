@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fghi.c                                             :+:      :+:    :+:   */
+/*   print_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbovt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/24 18:18:33 by kbovt             #+#    #+#             */
-/*   Updated: 2018/12/24 18:18:35 by kbovt            ###   ########.fr       */
+/*   Created: 2018/12/24 22:39:54 by kbovt             #+#    #+#             */
+/*   Updated: 2018/12/24 22:39:56 by kbovt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-uint32_t	md5_f(t_ctx *ctx)
+void			print_block_sha256(uint32_t *block)
 {
-	uint32_t	ret;
+	int	i;
+	int	j;
+	int	len;
 
-	ret = ((ctx->b & ctx->c) | (~(ctx->b) & ctx->d));
-	return (ret);
-}
-
-uint32_t	md5_g(t_ctx *ctx)
-{
-	return ((ctx->d & ctx->b) | (~(ctx->d) & ctx->c));
-}
-
-uint32_t	md5_h(t_ctx *ctx)
-{
-	return (ctx->b ^ ctx->c ^ ctx->d);
-}
-
-uint32_t	md5_i(t_ctx *ctx)
-{
-	return (ctx->c ^ (ctx->b | ~(ctx->d)));
+	i = 0;
+	while (i < 64)
+	{
+		ft_printf("word [%d]: %X | ", i, block[i]);
+		len = sizeof(*block);
+		j = -1;
+		while (++j < len)
+			ft_print_byte(((unsigned char *)(&block[i]))[j]);
+		ft_printf("\n");
+		i++;
+	}
 }
