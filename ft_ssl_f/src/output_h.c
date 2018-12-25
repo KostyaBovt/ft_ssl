@@ -26,7 +26,7 @@ void	output_hash_orig(t_global *g, t_hash *hash)
 {
 	if (!g->q)
 	{
-		if (g->input_type == 'i' && g->input_type == 's')
+		if (g->input_type == 'i' || g->input_type == 's')
 			ft_printf("%s (\"%s\") = ", g->alg_print, g->input_msg);
 		else
 			ft_printf("%s (%s) = ", g->alg_print, g->input_msg);
@@ -40,7 +40,7 @@ void	output_hash_rev(t_global *g, t_hash *hash)
 	output_the_hash(g, hash);
 	if (!g->q)
 	{
-		if (g->input_type == 'i' && g->input_type == 's')
+		if (g->input_type == 'i' || g->input_type == 's')
 			ft_printf(" \"%s\"", g->input_msg);
 		else
 			ft_printf(" %s", g->input_msg);
