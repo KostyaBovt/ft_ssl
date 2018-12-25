@@ -36,7 +36,10 @@ void	process_av(t_global *g, char *av)
 void	add_flag(t_global *g, char *flag)
 {
 	if (!ft_strcmp(flag, "-q"))
+	{
+		g->r = 0;
 		g->q = 1;
+	}
 	if (!ft_strcmp(flag, "-r"))
 		g->r = 1;
 }

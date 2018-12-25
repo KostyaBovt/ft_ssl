@@ -173,8 +173,14 @@ void						add_flag(t_global *g, char *flag);
 **output_h.c
 */
 void						output_hash(t_global *g, t_hash *hash);
+void						output_hash_orig(t_global *g, t_hash *hash);
+void						output_hash_rev(t_global *g, t_hash *hash);
 void						output_hash_stdin(t_global *g, t_hash *hash);
 void						output_the_hash(t_global *g, t_hash *hash);
+
+/*
+**output_h_2.c
+*/
 void						print_hash_hex(unsigned char c);
 
 /*
